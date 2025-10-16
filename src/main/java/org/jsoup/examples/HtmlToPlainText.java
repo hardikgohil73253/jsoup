@@ -1,18 +1,18 @@
 package org.jsoup.examples;
 
+import java.io.IOException;
+import java.util.HashSet;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.internal.StringUtil;
 import org.jsoup.helper.Validate;
+import org.jsoup.internal.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.jsoup.select.NodeVisitor;
-
-import java.io.IOException;
-import java.util.HashSet;
 
 /**
  HTML to plain-text. This example program demonstrates the use of jsoup to convert HTML input to lightly-formatted
@@ -27,7 +27,7 @@ import java.util.HashSet;
  where <i>url</i> is the URL to fetch, and <i>selector</i> is an optional CSS selector.
 */
 public class HtmlToPlainText {
-    private static final String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 (jsoup-example)";
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 (jsoup-example)";
     private static final int timeout = 5 * 1000;
 
     public static void main(String... args) throws IOException {
@@ -37,7 +37,7 @@ public class HtmlToPlainText {
 
         // fetch the specified URL and parse to a HTML DOM:
         Connection session = Jsoup.newSession() // .newSession creates a session to maintain settings and cookies across multiple requests
-            .userAgent(userAgent)
+            .userAgent(USER_AGENT)
             .timeout(timeout);
         Document doc = session.newRequest(url).get(); // .get executes a GET request, and parses the result
 
