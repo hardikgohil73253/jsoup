@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import static org.jsoup.helper.AuthenticationHandlerTest.MaxAttempts;
+import static org.jsoup.helper.AuthenticationHandlerTest.MAX_ATTEMPTS;
 import static org.jsoup.integration.ConnectTest.ihVal;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -123,7 +123,7 @@ public class ProxyTest {
                     return ctx.credentials(AuthFilter.ProxyUser, password + "wrong"); // incorrect
                 })
                 .execute();
-            assertEquals(MaxAttempts, count.get());
+            assertEquals(MAX_ATTEMPTS, count.get());
             assertEquals(HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED, res.statusCode());
         } catch (IOException e) {
             assertAuthRequiredException(e);

@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import static org.jsoup.helper.AuthenticationHandlerTest.MaxAttempts;
+import static org.jsoup.helper.AuthenticationHandlerTest.MAX_ATTEMPTS;
 import static org.jsoup.helper.HttpConnection.CONTENT_TYPE;
 import static org.jsoup.helper.HttpConnection.MULTIPART_FORM_DATA;
 import static org.junit.jupiter.api.Assertions.*;
@@ -1021,7 +1021,7 @@ public class ConnectTest {
             // In HttpClient, will throw IOE if our password delegate stops providing credentials after too many attempts. So we'll get this error.
             // In HttpUrlConnection, which would otherwise try 20 times, when the auth stops providing it will cascade to the underyling 401 response (which seems a better path IMO)
         }
-        assertEquals(MaxAttempts, count.get());
+        assertEquals(MAX_ATTEMPTS, count.get());
 
         AtomicInteger successCount = new AtomicInteger(0);
         Connection.Response successRes = session.newRequest(url)
