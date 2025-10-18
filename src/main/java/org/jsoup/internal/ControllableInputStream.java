@@ -201,7 +201,7 @@ public class ControllableInputStream extends FilterInputStream {
         if (percent == 100.0f) progress = null; // detach once we reach 100%, so that any subsequent buffer hits don't report 100 again
     }
 
-    public <ProgressContext> ControllableInputStream onProgress(int contentLength, Progress<ProgressContext> callback, ProgressContext context) {
+    public <P> ControllableInputStream onProgress(int contentLength, Progress<P> callback, P context) {
         Validate.notNull(callback);
         Validate.notNull(context);
         this.contentLength = contentLength;
