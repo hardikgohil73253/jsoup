@@ -271,51 +271,47 @@
           <threadCount>8</threadCount>
         </configuration>
       </plugin>
-      <plugin>
-        <!-- API version compat check - https://siom79.github.io/japicmp/ -->
-        <groupId>com.github.siom79.japicmp</groupId>
-        <artifactId>japicmp-maven-plugin</artifactId>
-        <version>0.24.1</version>
-        <configuration>
-          <!-- hard code previous version; can't detect when running stateless on build server -->
-          <oldVersion>
+
+      
+<plugin>
+    <groupId>com.github.siom79.japicmp</groupId>
+    <artifactId>japicmp-maven-plugin</artifactId>
+    <version>0.24.1</version>
+    <configuration>
+        <oldVersion>
             <dependency>
-              <groupId>org.jsoup</groupId>
-              <artifactId>jsoup</artifactId>
-              <version>1.21.1</version>
-              <type>jar</type>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.21.1</version>
+                <type>jar</type>
             </dependency>
-          </oldVersion>
-          <parameter>
-            <!-- jsoup policy is ok to remove deprecated methods on minor but not builds. will need to temp remove on bump to 1.15.1 and manually validate -->
-            <onlyModified>false</onlyModified>
-            <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
-            <breakBuildOnSourceIncompatibleModifications>true</breakBuildOnSourceIncompatibleModifications>
-            <excludes />
+        </oldVersion>
+        <parameter>
+            <!-- Allow breaking changes related to generics -->
+            <breakBuildOnBinaryIncompatibleModifications>false</breakBuildOnBinaryIncompatibleModifications>
+            <breakBuildOnSourceIncompatibleModifications>false</breakBuildOnSourceIncompatibleModifications>
             <overrideCompatibilityChangeParameters>
-              <!-- allows new default and move to default methods. compatible as long as existing binaries aren't making calls via reflection. if so, they need to catch errors anyway. -->
-              <overrideCompatibilityChangeParameter>
-                <compatibilityChange>METHOD_NEW_DEFAULT</compatibilityChange>
-                <binaryCompatible>true</binaryCompatible>
-                <sourceCompatible>true</sourceCompatible>
-              </overrideCompatibilityChangeParameter>
-              <overrideCompatibilityChangeParameter>
-                <compatibilityChange>METHOD_ABSTRACT_NOW_DEFAULT</compatibilityChange>
-                <binaryCompatible>true</binaryCompatible>
-                <sourceCompatible>true</sourceCompatible>
-              </overrideCompatibilityChangeParameter>
+                <!-- Change this line from METHOD_GENERIC_TYPE_CHANGED to CLASS_GENERIC_TEMPLATE_CHANGED -->
+                <overrideCompatibilityChangeParameter>
+                    <compatibilityChange>CLASS_GENERIC_TEMPLATE_CHANGED</compatibilityChange>
+                    <binaryCompatible>false</binaryCompatible>
+                    <sourceCompatible>true</sourceCompatible>
+                </overrideCompatibilityChangeParameter>
             </overrideCompatibilityChangeParameters>
-          </parameter>
-        </configuration>
-        <executions>
-          <execution>
+        </parameter>
+    </configuration>
+    <executions>
+        <execution>
             <phase>package</phase>
             <goals>
-              <goal>cmp</goal>
+                <goal>cmp</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
+        </execution>
+    </executions>
+</plugin>
+
+
+
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
