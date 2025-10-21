@@ -73,6 +73,9 @@ public class HttpConnection implements Connection {
     static final String DefaultUploadType = "application/octet-stream";
     private static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
 
+    //Added constant to remove duplicates
+    private static final String PARAM_VALUE = "value";
+
     private HttpConnection.Request req;
     private Connection.@Nullable Response res;
     @Nullable Object client; // The HttpClient for this Connection, if via the HttpClientExecutor
@@ -581,7 +584,7 @@ public class HttpConnection implements Connection {
         @Override
         public T cookie(String name, String value) {
             Validate.notEmptyParam(name, "name");
-            Validate.notNullParam(value, "value");
+            Validate.notNullParam(value, PARAM_VALUE);
             cookies.put(name, value);
             return (T) this;
         }
@@ -1357,7 +1360,7 @@ public class HttpConnection implements Connection {
 
         private KeyVal(String key, String value) {
             Validate.notEmptyParam(key, "key");
-            Validate.notNullParam(value, "value");
+            Validate.notNullParam(value, PARAM_VALUE);
             this.key = key;
             this.value = value;
         }
@@ -1376,7 +1379,7 @@ public class HttpConnection implements Connection {
 
         @Override
         public KeyVal value(String value) {
-            Validate.notNullParam(value, "value");
+            Validate.notNullParam(value, PARAM_VALUE);
             this.value = value;
             return this;
         }
