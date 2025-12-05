@@ -41,14 +41,17 @@ public class TestServer {
     static int TlsPort;
 
     private static final String Localhost = "localhost";
-    private static final String KeystorePassword = getRequiredEnv("KEYSTORE_PASSWORD");
+    private static final String DEFAULT_TEST_KEYSTORE_PASSWORD = "dummypassword";
+    private static final String KeystorePassword = getKeystorePassword();
 
-    private static String getRequiredEnv(String name) {
-    String value = System.getenv(name);
-    if (value == null || value.trim().isEmpty()) {
-        throw new IllegalStateException(name + " is not set");
-    }
-    return value;
+    private static String getKeystorePassword() {
+        String pw = System.getenv("KEYSTORE_PASSWORD");
+
+        if (pw == null || pw.trim().isEmpty()) {
+            return DEFAULT_TEST_KEYSTORE_PASSWORD;
+        }
+
+        return pw;
     }
 
     private static final Server Jetty = newServer();
