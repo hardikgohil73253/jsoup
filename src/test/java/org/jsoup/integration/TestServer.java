@@ -41,7 +41,18 @@ public class TestServer {
     static int TlsPort;
 
     private static final String Localhost = "localhost";
-    private static final String KeystorePassword = "hunter2";
+    private static final String DEFAULT_TEST_KEYSTORE_PASSWORD = "dummypassword";
+    private static final String KeystorePassword = getKeystorePassword();
+
+    private static String getKeystorePassword() {
+        String pw = System.getenv("KEYSTORE_PASSWORD");
+
+        if (pw == null || pw.trim().isEmpty()) {
+            return DEFAULT_TEST_KEYSTORE_PASSWORD;
+        }
+
+        return pw;
+    }
 
     private static final Server Jetty = newServer();
     private static final ServletHandler JettyHandler = new ServletHandler();
