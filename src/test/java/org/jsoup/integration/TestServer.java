@@ -41,7 +41,15 @@ public class TestServer {
     static int TlsPort;
 
     private static final String Localhost = "localhost";
-    private static final String KeystorePassword = "hunter2";
+    private static final String KeystorePassword = getRequiredEnv("KEYSTORE_PASSWORD");
+
+    private static String getRequiredEnv(String name) {
+        String value = System.getenv(name);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException(name + " is not set");
+        }
+        return value;
+    }
 
     private static final Server Jetty = newServer();
     private static final ServletHandler JettyHandler = new ServletHandler();
