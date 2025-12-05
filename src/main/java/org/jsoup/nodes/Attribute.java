@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 /**
  A single key + value attribute. (Only used for presentation.)
  */
-public class Attribute implements Map.Entry<String, String>, Cloneable  {
+public class Attribute implements Map.Entry<String, String> {
     private static final String[] booleanAttributes = {
             "allowfullscreen", "async", "autofocus", "checked", "compact", "declare", "default", "defer", "disabled",
             "formnovalidate", "hidden", "inert", "ismap", "itemscope", "multiple", "muted", "nohref", "noresize",
@@ -339,12 +339,12 @@ public class Attribute implements Map.Entry<String, String>, Cloneable  {
         return Objects.hash(key, val);
     }
 
-    @Override
-    public Attribute clone() {
-        try {
-            return (Attribute) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+    /**
+     * Create a copy of this attribute. The copied attribute will have the same key and value,
+     * but will not be connected to any parent Attributes object.
+     * @return a new Attribute with the same key and value as this one
+     */
+    public Attribute copy() {
+        return new Attribute(key, val, null);
     }
 }

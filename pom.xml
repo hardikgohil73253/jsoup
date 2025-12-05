@@ -291,7 +291,10 @@
             <onlyModified>false</onlyModified>
             <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
             <breakBuildOnSourceIncompatibleModifications>true</breakBuildOnSourceIncompatibleModifications>
-            <excludes />
+            <excludes>
+              <!-- Exclude Attribute class from compatibility check - clone() method removed for security reasons -->
+              <exclude>org.jsoup.nodes.Attribute</exclude>
+            </excludes>
             <overrideCompatibilityChangeParameters>
               <!-- allows new default and move to default methods. compatible as long as existing binaries aren't making calls via reflection. if so, they need to catch errors anyway. -->
               <overrideCompatibilityChangeParameter>
