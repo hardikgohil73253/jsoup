@@ -23,7 +23,7 @@ public class CookieServlet extends BaseServlet {
     protected void doIt(HttpServletRequest req, HttpServletResponse res) throws IOException {
         // Do we want to set cookies?
         if (req.getParameter(SetCookiesParam) != null)
-            setCookies(res);
+            setCookies(req, res);
 
         // Do we want to redirect elsewhere?
         String loc = req.getParameter(LocationParam);
@@ -47,27 +47,34 @@ public class CookieServlet extends BaseServlet {
         w.println("</table>");
     }
 
-    private void setCookies(HttpServletResponse res) {
+    private void setCookies(HttpServletRequest req, HttpServletResponse res) {
+        boolean isSecure = req.isSecure();
+
         Cookie one = new Cookie("One", "Root");
         one.setPath("/");
+        one.setSecure(isSecure);
         res.addCookie(one);
 
         Cookie two = new Cookie("One", "CookieServlet");
         two.setPath("/CookieServlet");
+        two.setSecure(isSecure);
         two.setHttpOnly(true);
         two.setComment("Quite nice");
         res.addCookie(two);
 
         Cookie three = new Cookie("One", "EchoServlet");
         three.setPath("/EchoServlet");
+        three.setSecure(isSecure);
         res.addCookie(three);
 
         Cookie four = new Cookie("Two", "NoSuchPath");
         four.setPath("/bogus");
+        four.setSecure(isSecure);
         res.addCookie(four);
 
         Cookie five = new Cookie("Two", "Override");
         five.setPath("/bogus");
+        five.setSecure(isSecure);
         res.addCookie(five);
     }
 
