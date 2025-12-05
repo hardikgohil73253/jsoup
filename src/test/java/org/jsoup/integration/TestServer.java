@@ -44,11 +44,11 @@ public class TestServer {
     private static final String KeystorePassword = getRequiredEnv("KEYSTORE_PASSWORD");
 
     private static String getRequiredEnv(String name) {
-        String value = System.getenv(name);
-        if (value == null || value.isBlank()) {
-            throw new IllegalStateException(name + " is not set");
-        }
-        return value;
+    String value = System.getenv(name);
+    if (value == null || value.trim().isEmpty()) {
+        throw new IllegalStateException(name + " is not set");
+    }
+    return value;
     }
 
     private static final Server Jetty = newServer();
