@@ -35,6 +35,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
+import java.security.SecureRandom;
+
 
 import static org.jsoup.internal.SharedConstants.DefaultBufferSize;
 
@@ -51,6 +53,8 @@ public final class DataUtil {
     private static final char[] mimeBoundaryChars =
             "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     static final int boundaryLength = 32;
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+
 
     private DataUtil() {}
 
@@ -384,9 +388,9 @@ public final class DataUtil {
      */
     static String mimeBoundary() {
         final StringBuilder mime = StringUtil.borrowBuilder();
-        final Random rand = new Random();
+
         for (int i = 0; i < boundaryLength; i++) {
-            mime.append(mimeBoundaryChars[rand.nextInt(mimeBoundaryChars.length)]);
+            mime.append(mimeBoundaryChars[SECURE_RANDOM.nextInt(mimeBoundaryChars.length)]);
         }
         return StringUtil.releaseBuilder(mime);
     }
