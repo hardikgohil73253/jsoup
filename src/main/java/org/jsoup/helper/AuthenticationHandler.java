@@ -12,7 +12,7 @@ import java.net.PasswordAuthentication;
  ThreadLocal.
  */
 class AuthenticationHandler extends Authenticator {
-    static final int MaxAttempts = 3; // max authentication attempts per request. allows for multiple auths (e.g. proxy and server) in one request, but saves otherwise 20 requests if credentials are incorrect.
+    static final int MAX_ATTEMPTS = 3; // max authentication attempts per request. allows for multiple auths (e.g. proxy and server) in one request, but saves otherwise 20 requests if credentials are incorrect.
     static AuthShim handler;
 
     static {
@@ -48,7 +48,7 @@ class AuthenticationHandler extends Authenticator {
         // if the password returned fails, Java will repeatedly retry the request with a new password auth hit (because
         // it may be an interactive prompt, and the user could eventually get it right). But in Jsoup's context, the
         // auth will either be correct or not, so just abandon
-        if (delegate.attemptCount > MaxAttempts)
+        if (delegate.attemptCount > MAX_ATTEMPTS)
             return null; // When using HttpClient, this will manifest as "No credentials provided" IOException; not ideal; would be clearer if we could then detach the authenticator which would bubble the 401, but there's no path for that
         if (delegate.auth == null)
             return null; // detached - would have been the Global Authenticator (not a delegate)
